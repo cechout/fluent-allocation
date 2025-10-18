@@ -1,0 +1,7 @@
+https://learn.microsoft.com/de-de/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver16
+Version: SQL Server Express 2019
+
+1. Downloaden und öffnen
+2. Medien Herunterladen > LocalDB
+3. auf "Herunterladen" klicken
+4. Heruntergeladene .msi Datei öffnen und einrichten

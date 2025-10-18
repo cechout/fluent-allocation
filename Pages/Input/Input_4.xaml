@@ -1,0 +1,159 @@
+﻿<Page x:Class="Kurszuteilung.Pages.Input.Input_4"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kurszuteilung.Pages.Input"
+      mc:Ignorable="d" 
+      d:DesignHeight="444"
+      d:DesignWidth="450"
+      Title="Help_4">
+
+    <Border Background="{StaticResource Brush_Layer3}">
+        <Grid>
+            <Grid.RowDefinitions>
+
+                <!--Content-->
+                <RowDefinition Height="90*" />
+                <RowDefinition Height="20*" />
+
+                <!--Fill Row-->
+                <RowDefinition Height="334*" />
+            </Grid.RowDefinitions>
+
+            <!--Explaining Image-->
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="11"
+                    CornerRadius="10"
+                    Background="{StaticResource Brush_Layer3}"
+                    BorderThickness="4"
+                    BorderBrush="{StaticResource Brush_Accent1}">
+
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+
+                        <!--Group-->
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="35*" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Group-->
+                    <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Gruppieren"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <!--Button Enabled-->
+                    <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Visibility="Collapsed"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonAccent1}"
+                        Foreground="White"
+                        x:Name="Button_GroupingEnabled"
+                        Click="Click_DisableGrouping">
+
+                        <StackPanel>
+                            <Image Source="/Icons/done.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--Button Disabled-->
+                    <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Visibility="Visible"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        x:Name="Button_GroupingDisabled"
+                        Click="Click_EnableGrouping">
+
+                        <StackPanel>
+                            <Image Source="/Icons/done.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="5"
+                         Text=""
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_ProcessAttribute" />
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="2"
+                          VerticalScrollBarVisibility="Visible"
+                          Style="{StaticResource Style_ScrollViewerLayer5}">
+
+                <StackPanel Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="11">
+
+                    <!--Explaining Texts-->
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+
+                    <Run Text="Hier kann man entscheiden ob man die Schüler zusätzlich auf einer weiterem Excel Blatt nach einem bestimmten" />
+                    <Run Text="Attribut"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="gruppieren möchte." />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+                    <Run Text="Der" />
+                    <Run Text="Name"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="des Attributs wird in die Box eingegeben." />
+                    </TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Page>

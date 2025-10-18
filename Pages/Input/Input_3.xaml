@@ -1,0 +1,377 @@
+﻿<Page x:Class="Kurszuteilung.Pages.Input.Input_3"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kurszuteilung.Pages.Input"
+      mc:Ignorable="d" 
+      d:DesignHeight="444"
+      d:DesignWidth="450"
+      Title="Help_3">
+
+    <Border Background="{StaticResource Brush_Layer3}">
+        <Grid>
+            <Grid.RowDefinitions>
+
+                <!--Input Excel Table Path Textbox-->
+                <!--Content Heigh + Border Thickness-->
+                <RowDefinition Height="228*" />
+                <RowDefinition Height="20*" />
+
+                <!--Fill Row-->
+                <RowDefinition Height="196*" />
+            </Grid.RowDefinitions>
+
+            <!--Explaining Image-->
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="11"
+                    CornerRadius="10"
+                    Background="{StaticResource Brush_Layer3}"
+                    BorderThickness="4"
+                    BorderBrush="{StaticResource Brush_Accent1}">
+
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+
+                        <!--NrOfEverything-->
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="35*" />
+
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="35*" />
+
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="35*" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--NrOfUsers-->
+                    <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Schüler"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <Button Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_AddUser">
+
+                        <StackPanel>
+                            <Image Source="/Icons/add.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Text="0"
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_NrOfUsers" />
+
+                    <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_SubtractUser">
+
+                        <StackPanel>
+                            <Image Source="/Icons/sub.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--NrOfSubjects-->
+                    <TextBlock Grid.Row="0"
+                           Grid.Column="3"
+                           Grid.ColumnSpan="3"
+                           Text="Fächer"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <Button Grid.Row="1"
+                        Grid.Column="5"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_AddSubject">
+
+                        <StackPanel>
+                            <Image Source="/Icons/add.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="1"
+                         Grid.Column="4"
+                         Text="0"
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_NrOfSubjects" />
+
+                    <Button Grid.Row="1"
+                        Grid.Column="3"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_SubtractSubject">
+
+                        <StackPanel>
+                            <Image Source="/Icons/sub.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--NrOfAttributes-->
+                    <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Attribute"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <Button Grid.Row="3"
+                        Grid.Column="2"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_AddAttribute">
+
+                        <StackPanel>
+                            <Image Source="/Icons/add.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="3"
+                         Grid.Column="1"
+                         Text="0"
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_NrOfAttributes" />
+
+                    <Button Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_SubtractAttribute">
+
+                        <StackPanel>
+                            <Image Source="/Icons/sub.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--NrOfPrios-->
+                    <TextBlock Grid.Row="2"
+                           Grid.Column="3"
+                           Grid.ColumnSpan="3"
+                           Text="Prioritäten"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <Button Grid.Row="3"
+                        Grid.Column="5"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_AddPrio">
+
+                        <StackPanel>
+                            <Image Source="/Icons/add.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="3"
+                         Grid.Column="4"
+                         Text="0"
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_NrOfPrios" />
+
+                    <Button Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_SubtractPrio">
+
+                        <StackPanel>
+                            <Image Source="/Icons/sub.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--NrOfRequiredSubjects-->
+                    <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Benötigte Fächer"
+                           Style="{StaticResource Font_ButtonHeader}"
+                           VerticalAlignment="Center"
+                           Margin="9, 2, 0, 0" />
+
+                    <Button Grid.Row="5"
+                        Grid.Column="2"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        Click="Click_AddRequiredSubject">
+
+                        <StackPanel>
+                            <Image Source="/Icons/add.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBox Grid.Row="5"
+                         Grid.Column="1"
+                         Text="0"
+                         Margin="2"
+                         Foreground="White"
+                         Padding="10, 0, 10, 0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         BorderThickness="3"
+                         Style="{StaticResource Style_TextBoxLayer6}"
+                         x:Name="Textbox_NrOfRequiredSubjects" />
+
+                    <Button Grid.Row="5"
+                        Grid.Column="0"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer5}"
+                        Foreground="White"
+                        FontFamily="Microsoft YaHei UI"
+                        Click="Click_SubtractRequiredSubject">
+
+                        <StackPanel>
+                            <Image Source="/Icons/sub.png"
+                               Height="22"
+                               Width="22" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="2"
+                          VerticalScrollBarVisibility="Visible"
+                          Style="{StaticResource Style_ScrollViewerLayer5}">
+
+                <StackPanel Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="11">
+
+                    <!--Explaining Texts-->
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+            
+                    <Run Text="Hier wird die" />
+                    <Run Text="Anzahl"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="der jeweiligen Ojekte/Eigenschaften angegeben." />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+                    <Run Text="Hat man Beispielsweise 100 Schüler, so trägt man in die Box die Zahl 100 ein." />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+                    <Run Text="Bei" />
+                    <Run Text="Benötigte Fächer"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="wird die Anzahl der Fächer eingegeben, die jeder Schüler zum Schluss als Wahlpflichfach haben sollte." />
+                    </TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Page>

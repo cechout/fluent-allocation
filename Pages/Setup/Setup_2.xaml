@@ -1,0 +1,164 @@
+﻿<Page x:Class="Kurszuteilung.Pages.Setup.Setup_2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kurszuteilung.Pages.Setup"
+      mc:Ignorable="d" 
+      d:DesignHeight="444"
+      d:DesignWidth="450"
+      Title="Setup_2">
+
+    <Border Background="{StaticResource Brush_Layer3}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+
+                <!--Content-->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20*" />
+
+                <!--Fill Row-->
+                <RowDefinition Height="285*" />
+
+            </Grid.RowDefinitions>
+
+            <!--Explaining Image-->
+            <Border Grid.Row="0"
+                    CornerRadius="10"
+                    Background="{StaticResource Brush_Layer3}"
+                    BorderThickness="4"
+                    BorderBrush="{StaticResource Brush_Accent1}">
+
+                <Image HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Source="/Images/Setup/headerUsers.png"
+                       Stretch="Uniform" />
+            </Border>
+
+            <ScrollViewer Grid.Row="2"
+                          VerticalScrollBarVisibility="Visible"
+                          Style="{StaticResource Style_ScrollViewerLayer5}">
+                <StackPanel Grid.Row="2">
+
+                    <!--Explaining Text-->
+                    <!--Header-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="22"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           Text="1. Blatt (Schüler)"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingHeader}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0" />
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+
+                    <Run Text="Folgende Spalten müssen" />
+                    <Run Text="hintereinander"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="angeordnet sein." />
+                    </TextBlock>
+
+                    <!--Guideline-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="23"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingGuideline}"
+                           VerticalAlignment="Top"
+                           Margin="5, 10, 0, 0">
+        
+                    <Run Text="1. Spalte:" />
+                    <Run Text="Id" 
+                         Foreground="{StaticResource Brush_Accent3}"/>
+                    <LineBreak />
+            
+                    <Run Text="2. Spalte:" />
+                    <Run Text="Name"
+                         Foreground="{StaticResource Brush_Accent3}" />
+                    <LineBreak />
+            
+                    <Run Text="ab 3. Spalte: beliebige Anzahl von" />
+                    <Run Text="Attributen"
+                         Foreground="{StaticResource Brush_Accent2}" />
+                    <LineBreak />
+                    
+                    <Run Text="danach: beliebige Anzahl von" />
+                    <Run Text="Prioritäten"
+                         Foreground="{StaticResource Brush_Accent3}" />
+                    </TextBlock>
+
+                    <!--Necessity Display-->
+                    <StackPanel Orientation="Horizontal"
+                            Margin="5, 5, 5, 0">
+
+                        <Border Height="20"
+                            Width="20"
+                            CornerRadius="5"
+                            Background="{StaticResource Brush_Accent3}" />
+
+                        <TextBlock Grid.Row="2"
+                               LineHeight="22"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               Text="Verpflichtend"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="7, 5, 5, 0" />
+
+                        <Border Height="20"
+                            Width="20"
+                            CornerRadius="5"
+                            Margin="20, 0, 0, 0"
+                            Background="{StaticResource Brush_Accent2}" />
+
+                        <TextBlock Grid.Row="2"
+                               LineHeight="22"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               Text="Optional"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="7, 5, 5, 0" />
+                    </StackPanel>
+
+                    <!--Note-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingNote}"
+                           VerticalAlignment="Top"
+                           Margin="5, 20, 0, 0">
+            
+                    <Run Text="Hinweis:" />
+                    <LineBreak />
+
+                    <Run Text="Die Wahl der Bezeichungen in der Kopfzeile spielt keine Rolle." />
+                    </TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Page>

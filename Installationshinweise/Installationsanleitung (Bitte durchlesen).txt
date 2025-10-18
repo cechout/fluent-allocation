@@ -1,0 +1,15 @@
+Wichtig: Reihenfolge einhalten
+
+1. SQLLocalDB.msi 2019 herunterladen, installieren, neustarten
+2. SQLLocalDB.msi 2022 herunterladen, installieren, neustarten
+
+3. Kurszuteilung Setup.msi herunterladen, installieren
+4. Ordner öffnen wo dad Programm installiert wurde
+
+5. Navigieren zu Database > main_database4.mdf auswählen > Rechtsklick > Eigenschaften > Sicherheit
+6. Jedem aufgelistetem Benutzer "Vollzugriff" gewähren
+
+5. main_database4_log.ldf auswählen > Rechtsklick > Eigenschaften > Sicherheit
+6. Jedem aufgelistetem Benutzer "Vollzugriff" gewähren
+
+Nun kann das Programm gestartet werden

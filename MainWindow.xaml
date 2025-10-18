@@ -1,0 +1,19 @@
+﻿<Window x:Class="Kurszuteilung.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kurszuteilung"
+        mc:Ignorable="d"
+        Icon="/Icons/Icon6.ico"
+        Title="Kursauswertung"
+        Height="610"
+        Width="400"
+        MinHeight="610"
+        MinWidth="400">
+    
+    <Border Background="{StaticResource Brush_Layer2}">
+        <Frame Source="/Pages/Evaluate/Evaluate.xaml"
+               NavigationUIVisibility="Hidden" />
+    </Border>
+</Window>

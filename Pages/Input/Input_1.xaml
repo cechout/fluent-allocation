@@ -1,0 +1,138 @@
+﻿<Page x:Class="Kurszuteilung.Pages.Input.Input_1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kurszuteilung.Pages.Input"
+      mc:Ignorable="d" 
+      d:DesignHeight="444"
+      d:DesignWidth="450"
+      Title="Help_1">
+
+    <Border Background="{StaticResource Brush_Layer3}">
+        <Grid>
+            <Grid.RowDefinitions>
+
+                <!--Content-->
+                <RowDefinition Height="90*" />
+                <RowDefinition Height="20*" />
+
+                <!--Fill Row-->
+                <RowDefinition Height="334*" />
+            </Grid.RowDefinitions>
+
+            <!--Explaining Image-->
+            <Border Grid.Row="0"
+                    CornerRadius="10"
+                    Background="{StaticResource Brush_Layer3}"
+                    BorderThickness="4"
+                    BorderBrush="{StaticResource Brush_Accent1}">
+
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+
+                        <!--Input Path-->
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="35*" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Input Path-->
+                    <!--Explaining-->
+                    <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="6"
+                           Text="Quell-Excel-Datei"
+                           VerticalAlignment="Center"                           
+                           Style="{StaticResource Font_ButtonHeader}"
+                           Margin="9, 2, 0, 0" />
+
+                    <!--Button Open Explorer-->
+                    <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="6"
+                        Margin="2"
+                        Style="{StaticResource Style_ButtonLayer6}"
+                        Foreground="White"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        FontFamily="Microsoft YaHei UI"
+                        Click="Click_SourceFile"
+                        x:Name="Button_SourceFile">
+
+                        <StackPanel>
+                            <TextBlock Text="Klicken zum Auswählen"
+                                   Style="{StaticResource Font_ButtonText}"
+                                   x:Name="TextBlock_SourceFile"
+                                   HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="2"
+                          VerticalScrollBarVisibility="Visible"
+                          Style="{StaticResource Style_ScrollViewerLayer5}">
+                <StackPanel Grid.Row="2"
+                        Margin="0">
+
+                    <!--Explaining Text-->
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 5, 0">
+    
+                    <Run Text="Hier wird die" />
+                    <Run Text="Quell-Excel-Datei"
+                         Foreground="{StaticResource Brush_Accent1}"
+                         FontWeight="Bold" />
+                    <Run Text="ausgewählt, die alle zu verarbeitenden Daten enthält." />
+                    </TextBlock>
+
+                    <!--Note-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingText}"
+                           VerticalAlignment="Top"
+                           Margin="5, 20, 0, 0">
+            
+                    <Run Text="Hilfe bei der Einrichtung der Quell-Excel-Datei:" />
+                    </TextBlock>
+
+                    <!--Guideline-->
+                    <TextBlock Grid.Row="2"
+                           LineHeight="18"
+                           Grid.RowSpan="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="11"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource Font_TextBlockExplainingGuideline}"
+                           VerticalAlignment="Top"
+                           Margin="5, 5, 0, 0">
+            
+                    <Run Text="Menü > Quell-Excel-Datei einrichten" />
+                    </TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Page>

@@ -1,0 +1,138 @@
+﻿<Page x:Class="Kurszuteilung.Pages.Imprint.Imprint"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kurszuteilung.Pages.Imprint"
+      mc:Ignorable="d" 
+      d:DesignHeight="600"
+      d:DesignWidth="450"
+      Title="Imprint">
+
+    <Border Background="{StaticResource Brush_Layer3}">
+
+        <!--AllUse Grid-->
+        <Grid Margin="5">
+
+            <!--Main Grid-->
+            <Grid>
+                <Grid.RowDefinitions>
+
+                    <!--Header-->
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition />
+
+                </Grid.RowDefinitions>
+
+                <!--Header-->
+                <!--Menu Button-->
+                <Button Grid.Row="0"
+                        Grid.Column="0"                        
+                        Width="46"
+                        Margin="2"
+                        HorizontalAlignment="Left"
+                        Style="{DynamicResource Style_ButtonLayer3_5}"
+                        Click="Click_Menu">
+
+                    <StackPanel>
+                        <Image Source="/Icons/menu.png"
+                               Height="25"
+                               Width="25" />
+                    </StackPanel>
+                </Button>
+
+                <!--Title-->
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="6"
+                           Text="Info"
+                           Margin="55, 0, 0, 0"                           
+                           Style="{StaticResource Font_MenuHeader}"
+                           VerticalAlignment="Center" />
+
+                <!--Imprint Text-->
+                <StackPanel Grid.Row="3">
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                               LineHeight="18"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="9, 5, 5, 0">
+    
+                        <Run Text="Diese App ist ein Projekt des" />
+                        <Run Text="Richard Wossidlo Gymnasiums."
+                             FontWeight="Bold"
+                             Foreground="{StaticResource Brush_Accent1}" />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                               LineHeight="18"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="9, 5, 5, 0">
+    
+                        <Run Text="Adresse: Güstrower Straße 11, 17192 Waren (Müritz)" />
+                        <LineBreak />
+                        
+                        <Run Text="Telefon: 03991 74770" />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                               LineHeight="18"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="9, 20, 5, 0">
+    
+                        <Run Text="Projektanfang: September 2023" />
+                        <LineBreak />
+    
+                        <Run Text="Projektende: März 2024" />
+                    </TextBlock>
+
+                    <!--General-->
+                    <TextBlock Grid.Row="2"
+                               LineHeight="18"
+                               Grid.RowSpan="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingText}"
+                               VerticalAlignment="Top"
+                               Margin="9, 20, 5, 0">
+    
+                        <Run Text="Entwickelt von Daniel Čech unter der Leitung von Herr Sasse." />
+                    </TextBlock>
+
+                    <!--Note-->
+                    <TextBlock Grid.Row="2"
+                               LineHeight="18"
+                               Grid.RowSpan="1"
+                               Text="Danke an Michael Čech für die Bereitstellung seines Computers für Debugging-Zwecke :)"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="11"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource Font_TextBlockExplainingNote}"
+                               VerticalAlignment="Top"
+                               Margin="9, 20, 5, 0">
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>
