@@ -54,12 +54,17 @@
     </ItemGroup>
   </Target>
 
+  <!--
+    the database is copied once and then left alone: localdb keeps the copy attached for a while after a run,
+    so overwriting it on every build fails while the file is locked, and a replaced file under a still
+    attached name is refused on the next attach; every run wipes the tables anyway
+  -->
   <ItemGroup>
     <Content Include="Database\main_database.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\main_database_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
