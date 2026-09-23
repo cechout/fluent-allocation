@@ -8,7 +8,6 @@
         public Functions1 Functions1 = new();
         public Functions2 Functions2 = new();
         public Functions3 Functions3 = new();
-        public MainWindow MainWindow1 = new();
 
         List<int> userIdsNotSorted = new();
 
