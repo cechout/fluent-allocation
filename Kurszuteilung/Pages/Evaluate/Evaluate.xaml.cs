@@ -37,7 +37,7 @@ namespace Kurszuteilung.Pages.Evaluate
             //"try" in case of any error that could occur during the evaluation
             try
             {
-                EvaluateC Evaluate1 = new();                
+                EvaluateC Evaluate1 = new();
 
                 Evaluate1.ReadFromExcel();
                 Evaluate1.SortUsers();
