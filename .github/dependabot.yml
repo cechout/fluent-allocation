@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # no nuget entry yet: the only project is the WPF version 1, which is kept as it was and should not
+  # produce update PRs; the entry arrives with the WinUI project and is scoped to its directory
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
