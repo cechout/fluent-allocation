@@ -40,17 +40,19 @@
     <None Remove="Images\Setup\sheets.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>9</VersionMinor>
-      <VersionMajor>1</VersionMajor>
-      <Guid>00020813-0000-0000-c000-000000000046</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
+  <!--
+    excel comes in as the primary interop assembly from nuget instead of a COMReference, which only the
+    visual studio msbuild can resolve (MSB4803 on dotnet build) and only on a machine with office installed
+    the types stay embedded the way the COMReference had them; the code relies on that, because only an
+    embedded interop type hands a cell back as dynamic
+  -->
+  <Target Name="EmbedExcelInteropTypes" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'Microsoft.Office.Interop.Excel'">
+        <EmbedInteropTypes>true</EmbedInteropTypes>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
 
   <ItemGroup>
     <Content Include="Database\main_database.mdf">
@@ -141,6 +143,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.3" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
     <PackageReference Include="Open-XML-SDK" Version="2.9.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
   </ItemGroup>
