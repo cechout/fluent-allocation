@@ -71,7 +71,9 @@ namespace Kurszuteilung.Classes
         {
             List<string> attributeNames = new();
 
-            command1 = new SqlCommand("SELECT DISTINCT (Name) FROM UserAttributes", con1);
+            // sorted by name, and so are the values in InsertUsersInExcel; UserAttributes has no index, so without
+            // an explicit order the headers and the values of two or more attributes can come back in different orders
+            command1 = new SqlCommand("SELECT DISTINCT (Name) FROM UserAttributes ORDER BY Name", con1);
             dataReader1 = command1.ExecuteReader();
 
             while (dataReader1.Read())
@@ -232,7 +234,7 @@ namespace Kurszuteilung.Classes
                 dataReader1.Close();
 
                 //Set Attributes
-                command1 = new SqlCommand("SELECT Value FROM UserAttributes WHERE UserId = @UserId", con1);
+                command1 = new SqlCommand("SELECT Value FROM UserAttributes WHERE UserId = @UserId ORDER BY Name", con1);
                 command1.Parameters.AddWithValue("@UserId", currentUserId);
                 dataReader1 = command1.ExecuteReader();
 
