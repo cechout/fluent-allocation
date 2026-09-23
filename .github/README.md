@@ -47,3 +47,17 @@ dotnet run --project Kurszuteilung/Kurszuteilung.csproj
 ```
 
 Or open `FluentAllocation.slnx` in Visual Studio, set `Kurszuteilung` as the startup project and press `F5`.
+
+### 4. Try It
+[`Samples/students-and-courses.xlsx`](../Samples/students-and-courses.xlsx) holds 60 made-up students in three classes, eight courses and four priorities per student, with a few courses deliberately in high demand so the lottery has something to decide. Pick it as the source file (`Quell-Excel-Datei`) and fill in the numbers version 1 asks for:
+
+| Field | Value |
+| :--- | :--- |
+| Schüler | 60 |
+| Fächer | 8 |
+| Attribute | 1 |
+| Prioritäten | 4 |
+| Benötigte Fächer | 2 |
+| Gruppieren (optional) | `Class` |
+
+A handful of students usually end up without their second course; they are listed on the last sheet of the result, `FF-Schüler`.
