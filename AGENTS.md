@@ -1,11 +1,15 @@
 # Fluent Allocation Development Guidelines
 
-This project assigns students to the courses they chose. Every student hands in a priority list, every course has a
-capacity, and every student needs a fixed number of courses; the allocation walks the priorities from the top and
-draws lots wherever a course has more applicants than seats. It is being rewritten as a C# WinUI 3 desktop app.
-Until that rewrite exists, the repository holds only the original WPF version 1, `Kurszuteilung/`, which reads a
-source workbook through Excel and writes the allocation back into one.
+This project shares limited places fairly, based on everyone's own list of preferences. It started as a school tool:
+every student hands in a priority list, every course has a capacity, and every student needs a fixed number of
+courses; the allocation walks the priorities from the top and draws lots wherever a course has more applicants than
+seats. The original WPF version 1, `Kurszuteilung/`, does exactly that, reading a source workbook through Excel and
+writing the allocation back into one. It is being rewritten as a C# WinUI 3 desktop app, and that rewrite is no longer
+tied to students and courses: the same principle has to work in any setting, for example employees picking their
+vacation days.
 
+- In the WinUI version, keep names, UI strings and docs general. Nothing there may assume a school, students or
+  courses; those words belong to the WPF version 1 only.
 - Keep the work scoped to what was asked. Avoid opportunistic refactors, formatting churn, dependency
   bumps and drive-by renames.
 - Read the surrounding code before adding an abstraction. In the WinUI version prefer the MVVM patterns the file
