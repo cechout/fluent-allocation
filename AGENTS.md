@@ -23,8 +23,8 @@ vacation days.
   further and changes to it are not accepted. Its UI and its content, the imprint included, stay exactly as they
   were built at school.
 - Never attach `Kurszuteilung/Database/main_database.mdf` to a database server directly. A newer LocalDB upgrades
-  the file in place and older ones can no longer open it; the app only attaches the copy the build puts next to
-  the executable.
+  the file in place and older ones can no longer open it. The file is a template: the app copies it once per
+  Windows user to `%LocalAppData%\Kurszuteilung\Database` and only ever attaches that copy.
 - Prefer targeted search over full file reads, and cap any command whose output could be large.
 
 ## Comment Style
@@ -70,12 +70,14 @@ Kurszuteilung/
 ├── Classes/      the allocation pipeline and its helpers: EvaluateC runs it, Functions1 reads the workbook
 │                 into the database, Functions2 holds the allocation queries, Functions3 writes the result,
 │                 Excel wraps the Excel COM automation, Globals carries the form input
-├── Database/     main_database.mdf and .ldf, an empty LocalDB database that only carries the schema
+├── Database/     main_database.mdf and .ldf, an empty LocalDB database that only carries the schema; the
+│                 template the app copies per user
 ├── Pages/        Menu, Evaluate, Setup and Input (help pages), Imprint
 ├── Icons/        UI icons and the app icon
 └── Images/       the screenshots the help pages show
 
 Samples/          an example source workbook with made-up students
+Setup/            the Inno Setup script of the WPF version 1 and the script that builds its installer
 ```
 
 `.github/` holds the workflows, the issue and pull request templates and the public README.
@@ -92,6 +94,16 @@ dotnet build Kurszuteilung/Kurszuteilung.csproj -c Release
 Running it needs Microsoft Excel and SQL Server Express LocalDB (the `MSSQLLocalDB` instance) on the machine. The
 source workbook format is explained on the Setup help pages inside the app; `Samples/` holds a workbook that
 follows it.
+
+The installer is built by one script, which publishes the app self-contained for `win-x64` and compiles
+`Setup/KurszuteilungWPF_Setup.iss` with Inno Setup 6, passing it the `<Version>` from the `.csproj`:
+
+```powershell
+.\Setup\build-wpf-installer.ps1
+```
+
+It writes `Setup/Output/Kurszuteilung_Installer.exe`. The installer warns when Excel or LocalDB is missing but does
+not stop.
 
 The `format` check runs `dotnet format whitespace --verify-no-changes` against the `.editorconfig`. It
 only passes because `.gitattributes` pins the checkout to LF: Git for Windows sets `core.autocrlf=true`
@@ -166,3 +178,13 @@ repository setting, not in the build.
 - **Required checks report on every pull request.** `build` and `format` are required on `main`, so
   `pr-build.yml` skips work through a job condition and never through `paths-ignore`; a workflow skipped by
   path filtering never reports and leaves the pull request unmergeable.
+- **`<Version>` in the `.csproj` is the only place a version is written.** The installer script reads it from
+  there and passes it to Inno Setup, so the version in Installed apps can never drift from the app. It is bumped
+  in its own release pull request, never in a feature branch.
+- **The installer name is a contract.** `Kurszuteilung_Installer.exe` is what the Inno Setup script produces and
+  what the release notes of the WPF version 1 tell people to download.
+- **The app never writes next to its executable.** An installed copy sits in Program Files, where a normal user
+  cannot write; the database works from the per-user copy in `%LocalAppData%\Kurszuteilung`, which is also why the
+  app runs without elevation.
+- **The installer leaves `%LocalAppData%\Kurszuteilung` behind on uninstall.** LocalDB keeps the database registered
+  by its file path, so deleting the file makes the next attach at that path fail after a reinstall.
