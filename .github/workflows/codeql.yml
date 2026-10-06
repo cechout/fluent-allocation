@@ -1,8 +1,8 @@
 # security scanning via CodeQL, advanced setup with manual build mode
 #
-# manual rather than autobuild so the build is the same explicit one pr-build.yml runs; the WinUI project
-# that follows cannot be built by autobuild at all (MarkupCompilePass2 needs a full Build pass to resolve
-# x:Bind LocalAssembly types)
+# manual rather than autobuild so the build is the same explicit one pr-build.yml runs; autobuild cannot
+# build a WinUI project at all (MarkupCompilePass2 needs a full Build pass to resolve x:Bind LocalAssembly
+# types)
 name: codeql
 
 # codeql is not a required status check, so path filtering is safe here; skipping it on a doc-only change
@@ -42,13 +42,13 @@ jobs:
       - name: setup dotnet
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
       - name: restore
-        run: dotnet restore Kurszuteilung/Kurszuteilung.csproj
+        run: dotnet restore FluentAllocation/FluentAllocation.csproj -p:Platform=x64 -r win-x64 -p:SelfContained=true
 
       - name: build
-        run: dotnet build Kurszuteilung/Kurszuteilung.csproj --no-restore -c Release
+        run: dotnet build FluentAllocation/FluentAllocation.csproj --no-restore -c Release -p:Platform=x64 -r win-x64 -p:SelfContained=true
 
       - name: perform codeql analysis
         uses: github/codeql-action/analyze@v4

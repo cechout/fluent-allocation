@@ -1,7 +1,21 @@
 version: 2
 updates:
-  # no nuget entry yet: the only project is the WPF version 1, which is kept as it was and should not
-  # produce update PRs; the entry arrives with the WinUI project and is scoped to its directory
+  # scoped to the WinUI project; the WPF version 1 is kept as it was and gets no update pull requests
+  - package-ecosystem: "nuget"
+    directory: "/FluentAllocation"
+    schedule:
+      interval: "weekly"
+    groups:
+      # the deselected components pin the versions the metapackage pulls in, so they move with it
+      windows-app-sdk:
+        patterns:
+          - "Microsoft.WindowsAppSDK*"
+          - "Microsoft.Windows.AI.MachineLearning"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
