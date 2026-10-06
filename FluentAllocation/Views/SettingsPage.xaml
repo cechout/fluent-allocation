@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="FluentAllocation.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI">
+
+    <!--
+        no page margin, so the cards scroll out at the window edge and the scroll bar sits on it
+        (the header and the cards carry the margins of the other pages themselves)
+    -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  page header  -->
+        <!--  (the left margin clears the navigation views hamburger button)  -->
+        <Grid
+            Grid.Row="0"
+            Height="38"
+            Margin="49,4,4,0">
+            <TextBlock
+                VerticalAlignment="Center"
+                Style="{ThemeResource SubtitleTextBlockStyle}"
+                Text="Settings" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel
+                MaxWidth="1000"
+                Margin="16,12,16,20"
+                Spacing="4">
+
+                <!--  general  -->
+                <TextBlock
+                    Margin="4,8,0,6"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="General" />
+
+                <!--  app theme  -->
+                <!--  (the items in the order of AppTheme, which ThemeIndex relies on)  -->
+                <controls:SettingsCard
+                    Description="Light, dark, or match Windows"
+                    Header="App Theme"
+                    HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
+                    <ComboBox Width="150" SelectedIndex="{x:Bind ViewModel.ThemeIndex, Mode=TwoWay}">
+                        <ComboBoxItem Content="System Default" />
+                        <ComboBoxItem Content="Light" />
+                        <ComboBoxItem Content="Dark" />
+                    </ComboBox>
+                </controls:SettingsCard>
+
+                <!--  about and open source  -->
+                <TextBlock
+                    Margin="4,20,0,6"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="About &amp; Open Source" />
+
+                <!--  app info  -->
+                <controls:SettingsExpander
+                    Description="© 2026 Daniel Čech · MIT License"
+                    Header="Fluent Allocation"
+                    HeaderIcon="{ui:FontIcon Glyph=&#xE946;}">
+
+                    <!--  version  -->
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind ViewModel.VersionLabel}" />
+
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard Header="Documentation">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/cechout/fluent-allocation" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard Header="Developer Profile">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/cechout" />
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
+
+                <!--  third-party libraries  -->
+                <controls:SettingsExpander
+                    Description="Open source projects used in this app"
+                    Header="Third-Party Libraries"
+                    HeaderIcon="{ui:FontIcon Glyph=&#xE8F1;}">
+
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard Header="Windows App SDK">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/microsoft/WindowsAppSDK" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard Header="Windows Community Toolkit">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/CommunityToolkit/Windows" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard Header="MVVM Toolkit">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/CommunityToolkit/dotnet" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard Header="WinUIEx">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/dotMorten/WinUIEx" />
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
+
+                <!--  feedback  -->
+                <!--  (opens the issue template picker)  -->
+                <HyperlinkButton
+                    Margin="0,4,0,8"
+                    Content="Send Feedback"
+                    NavigateUri="https://github.com/cechout/fluent-allocation/issues/new/choose" />
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,3 +1,10 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="FluentAllocation/FluentAllocation.csproj">
+    <Platform Project="x64" />
+  </Project>
   <Project Path="Kurszuteilung/Kurszuteilung.csproj" />
 </Solution>
