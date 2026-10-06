@@ -6,5 +6,6 @@
   <Project Path="FluentAllocation/FluentAllocation.csproj">
     <Platform Project="x64" />
   </Project>
+  <Project Path="FluentAllocation.Tests/FluentAllocation.Tests.csproj" />
   <Project Path="Kurszuteilung/Kurszuteilung.csproj" />
 </Solution>

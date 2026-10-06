@@ -108,6 +108,26 @@ jobs:
           $lines | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           Write-Host "Publish payload: $([math]::Round($total / 1MB, 2)) MB"
 
+  # gated like the two around it; a required check only once it is added to the ruleset by hand
+  test:
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
+    runs-on: windows-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7
+
+      - name: setup dotnet
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: FluentAllocation.Tests/FluentAllocation.Tests.csproj
+
+      # plain net10.0, so neither a platform nor a runtime identifier
+      - name: engine tests
+        run: dotnet test FluentAllocation.Tests/FluentAllocation.Tests.csproj -c Release
+
   format:
     needs: changes
     if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
@@ -132,3 +152,7 @@ jobs:
       # runner default core.autocrlf=true hands out a crlf tree and every line fails
       - name: dotnet format whitespace check
         run: dotnet format whitespace FluentAllocation/FluentAllocation.csproj --verify-no-changes --verbosity diagnostic
+
+      # the test sources against the same editorconfig
+      - name: dotnet format whitespace check, tests
+        run: dotnet format whitespace FluentAllocation.Tests/FluentAllocation.Tests.csproj --verify-no-changes --verbosity diagnostic
