@@ -44,6 +44,9 @@ requirements: bring your own style if you prefer one, and expect these to shift 
   trailing comments on the individual lines.
 - A comment that only restates the line below it, or that defends an option nobody took, is usually
   better left out.
+- Comments are kept short: one or two lines for what the code does and the one thing that is not
+  obvious, the unit once on a group line, a trailing comment in a few words, and no history of how the
+  code got to where it is.
 
 Four tags mark code that is not ordinary. Use each only for what it names:
 
@@ -111,6 +114,12 @@ in its system config and the GitHub runner has the same default, so without that
 CRLF and every line of every file is reported as a violation. Note that `dotnet format` takes no MSBuild
 properties; passing `-p:Platform=x64` makes it print its usage help and exit non-zero, so the check would
 silently never run.
+
+## Test
+
+There is no test project. The bar for a change is that the build stays green and that the screen it
+touches was opened in a running app and looked at. Report what you did not verify instead of implying
+it passed.
 
 ## Commit & Push
 
