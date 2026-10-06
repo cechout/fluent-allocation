@@ -1,5 +1,5 @@
 # validates that a pull request actually compiles and follows the editorconfig before review
-# builds the WPF version 1 for now; both jobs move to the WinUI project once it exists
+# builds the WinUI project only; the frozen WPF version 1 is no longer built here
 name: pr build check
 
 on:
@@ -66,17 +66,47 @@ jobs:
       - name: setup dotnet
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
           cache: true
-          cache-dependency-path: Kurszuteilung/Kurszuteilung.csproj
+          cache-dependency-path: FluentAllocation/FluentAllocation.csproj
 
-      # plain dotnet build works because excel comes in as the interop assembly from nuget; a COMReference
-      # would need the visual studio msbuild and an office installation on the runner
+      # always the project, never FluentAllocation.slnx, which also holds the WPF version 1
+      # (WinUI 3 has no Any CPU, so every step names the platform)
       - name: restore
-        run: dotnet restore Kurszuteilung/Kurszuteilung.csproj
+        run: dotnet restore FluentAllocation/FluentAllocation.csproj -p:Platform=x64 -r win-x64 -p:SelfContained=true
 
-      - name: build
-        run: dotnet build Kurszuteilung/Kurszuteilung.csproj --no-restore -c Release
+      # one full pass; the XAML compiler needs it before a publish can resolve x:Bind types
+      - name: build win-x64
+        run: dotnet build FluentAllocation/FluentAllocation.csproj --no-restore -c Release -p:Platform=x64 -r win-x64 -p:SelfContained=true
+
+      # proves the publish path before a release depends on it; --no-build reuses the pass above
+      - name: publish win-x64
+        run: dotnet publish FluentAllocation/FluentAllocation.csproj --no-build -c Release -p:Platform=x64 -p:PublishProfile=win-x64
+
+      # absolute numbers only; the ten largest files show where a jump comes from
+      - name: report publish size
+        shell: pwsh
+        run: |
+          $publishDir = "FluentAllocation/bin/x64/Release/net10.0-windows10.0.19041.0/publish/win-x64"
+          $root = (Resolve-Path $publishDir).Path
+          $files = Get-ChildItem $root -Recurse -File
+          $total = ($files | Measure-Object -Property Length -Sum).Sum
+
+          $lines = @()
+          $lines += "## Publish payload"
+          $lines += ""
+          $lines += "Total: **$([math]::Round($total / 1MB, 2)) MB** across $($files.Count) files"
+          $lines += ""
+          $lines += "| Largest files | Size |"
+          $lines += "| :--- | ---: |"
+          foreach ($file in $files | Sort-Object Length -Descending | Select-Object -First 10)
+          {
+            $name = $file.FullName.Substring($root.Length + 1)
+            $lines += "| $name | $([math]::Round($file.Length / 1MB, 2)) MB |"
+          }
+
+          $lines | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          Write-Host "Publish payload: $([math]::Round($total / 1MB, 2)) MB"
 
   format:
     needs: changes
@@ -91,7 +121,7 @@ jobs:
       - name: setup dotnet
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
       # scoped to whitespace only, matches the .editorconfig, not style/analyzers
       #
@@ -101,4 +131,4 @@ jobs:
       # end_of_line = lf only holds because .gitattributes pins the checkout to lf; without it the
       # runner default core.autocrlf=true hands out a crlf tree and every line fails
       - name: dotnet format whitespace check
-        run: dotnet format whitespace Kurszuteilung/Kurszuteilung.csproj --verify-no-changes --verbosity diagnostic
+        run: dotnet format whitespace FluentAllocation/FluentAllocation.csproj --verify-no-changes --verbosity diagnostic
