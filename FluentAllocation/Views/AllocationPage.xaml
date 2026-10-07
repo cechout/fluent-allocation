@@ -6,26 +6,10 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     NavigationCacheMode="Required">
 
-    <Page.Resources>
-        <Style
-            x:Key="SectionLabelStyle"
-            BasedOn="{StaticResource BodyStrongTextBlockStyle}"
-            TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,8,0,4" />
-        </Style>
-
-        <!--  a file picker: the file name, trimmed, with the full path in the tooltip  -->
-        <Style x:Key="FileButtonStyle" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  page header  -->
@@ -41,23 +25,64 @@
         </Grid>
 
         <!--  form  -->
-        <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="16,4,16,12">
+        <!--
+            star rows as in version 1, so the controls grow with the window; the grid is held at least as
+            tall as the viewport (FormScroller_SizeChanged) and scrolls once its content needs more
+        -->
+        <ScrollViewer
+            x:Name="FormScroller"
+            Grid.Row="1"
+            SizeChanged="FormScroller_SizeChanged">
+            <Grid x:Name="FormGrid" Padding="16,4,16,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
                 <!--  source workbook  -->
-                <TextBlock Style="{StaticResource SectionLabelStyle}" Text="Source Workbook" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,8,0,4"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="Source Workbook" />
                 <Button
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
                     AutomationProperties.Name="Source workbook"
                     Command="{x:Bind ViewModel.PickSourceCommand}"
-                    Style="{StaticResource FileButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.SourcePath, Mode=OneWay}">
                     <TextBlock Text="{x:Bind ViewModel.SourceLabel, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
                 </Button>
 
                 <!--  result workbook: new or existing, then the file of that mode  -->
-                <TextBlock Style="{StaticResource SectionLabelStyle}" Text="Result Workbook" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0,8,0,4"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="Result Workbook" />
                 <controls:Segmented
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
                     HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     AutomationProperties.Name="Result workbook"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     SelectedIndex="{x:Bind ViewModel.ResultTargetIndex, Mode=TwoWay}">
@@ -65,74 +90,81 @@
                     <controls:SegmentedItem Content="Existing File" />
                 </controls:Segmented>
                 <Button
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
                     Margin="0,8,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
                     AutomationProperties.Name="Result file"
                     Command="{x:Bind ViewModel.PickResultCommand}"
-                    Style="{StaticResource FileButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.ResultPath, Mode=OneWay}">
                     <TextBlock Text="{x:Bind ViewModel.ResultLabel, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
                 </Button>
 
                 <!--  counts, two per row as in version 1  -->
-                <Grid
-                    Margin="0,12,0,0"
-                    ColumnSpacing="8"
-                    RowSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <NumberBox
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Header="Participants"
-                        IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
-                        Minimum="0"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ViewModel.ParticipantCount, Mode=TwoWay}" />
-                    <NumberBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Header="Options"
-                        IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
-                        Minimum="0"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ViewModel.OptionCount, Mode=TwoWay}" />
-                    <NumberBox
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Header="Attributes"
-                        IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
-                        Minimum="0"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ViewModel.AttributeCount, Mode=TwoWay}" />
-                    <NumberBox
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Header="Priorities"
-                        IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
-                        Minimum="0"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ViewModel.PriorityCount, Mode=TwoWay}" />
-                    <NumberBox
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Header="Options per Participant"
-                        IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
-                        Minimum="0"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ViewModel.OptionsPerParticipant, Mode=TwoWay}" />
-                </Grid>
+                <NumberBox
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Margin="0,12,4,0"
+                    VerticalAlignment="Stretch"
+                    Header="Participants"
+                    IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel.ParticipantCount, Mode=TwoWay}" />
+                <NumberBox
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="4,12,0,0"
+                    VerticalAlignment="Stretch"
+                    Header="Options"
+                    IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel.OptionCount, Mode=TwoWay}" />
+                <NumberBox
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="0,8,4,0"
+                    VerticalAlignment="Stretch"
+                    Header="Attributes"
+                    IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel.AttributeCount, Mode=TwoWay}" />
+                <NumberBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="4,8,0,0"
+                    VerticalAlignment="Stretch"
+                    Header="Priorities"
+                    IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel.PriorityCount, Mode=TwoWay}" />
+                <NumberBox
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="0,8,4,0"
+                    VerticalAlignment="Stretch"
+                    Header="Options per Participant"
+                    IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel.OptionsPerParticipant, Mode=TwoWay}" />
 
                 <!--  grouping: the switch, then the attribute to group by  -->
-                <TextBlock Style="{StaticResource SectionLabelStyle}" Text="Group by Attribute" />
-                <Grid ColumnSpacing="8">
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.ColumnSpan="2"
+                    Margin="0,8,0,4"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="Group by Attribute" />
+                <Grid
+                    Grid.Row="9"
+                    Grid.ColumnSpan="2"
+                    ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -145,115 +177,124 @@
                         IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}" />
                     <TextBox
                         Grid.Column="1"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center"
                         AutomationProperties.Name="Attribute name"
                         IsEnabled="{x:Bind ViewModel.IsGroupAttributeEnabled, Mode=OneWay}"
                         PlaceholderText="Attribute name"
                         Text="{x:Bind ViewModel.GroupAttribute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
-            </StackPanel>
-        </ScrollViewer>
 
-        <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
-        <Grid Grid.Row="2" Margin="16,8,16,16">
+                <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
+                <Grid
+                    Grid.Row="10"
+                    Grid.ColumnSpan="2"
+                    Margin="0,16,0,0">
 
-            <!--  allocate  -->
-            <Button
-                HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.AllocateCommand}"
-                Content="Allocate"
-                Style="{StaticResource AccentButtonStyle}"
-                Visibility="{x:Bind ViewModel.IsIdle, Mode=OneWay}" />
+                    <!--  allocate  -->
+                    <Button
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.AllocateCommand}"
+                        Content="Allocate"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Visibility="{x:Bind ViewModel.IsIdle, Mode=OneWay}" />
 
-            <!--  running  -->
-            <StackPanel
-                HorizontalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="12"
-                Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay}">
-                <ProgressRing
-                    Width="20"
-                    Height="20"
-                    IsActive="{x:Bind ViewModel.IsRunning, Mode=OneWay}" />
-                <TextBlock VerticalAlignment="Center" Text="Allocating..." />
-            </StackPanel>
-
-            <!--  success  -->
-            <!--
-                (the fill stays in every state and follows a theme switch through the theme dictionaries;
-                the glyph and the text carry the meaning too)
-            -->
-            <Button
-                HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.DismissResultCommand}"
-                Visibility="{x:Bind ViewModel.IsSucceeded, Mode=OneWay}">
-                <Button.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.ThemeDictionaries>
-                            <ResourceDictionary x:Key="Default">
-                                <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                            </ResourceDictionary>
-                            <ResourceDictionary x:Key="Light">
-                                <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
-                            </ResourceDictionary>
-                        </ResourceDictionary.ThemeDictionaries>
-                    </ResourceDictionary>
-                </Button.Resources>
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <FontIcon
-                        FontSize="14"
-                        Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                        Glyph="&#xE73E;" />
-                    <TextBlock Text="Allocation complete" />
-                </StackPanel>
-            </Button>
-
-            <!--  error, with the message under it  -->
-            <Button
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                AutomationProperties.HelpText="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-                Command="{x:Bind ViewModel.DismissResultCommand}"
-                Visibility="{x:Bind ViewModel.IsFailed, Mode=OneWay}">
-                <Button.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.ThemeDictionaries>
-                            <ResourceDictionary x:Key="Default">
-                                <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                            </ResourceDictionary>
-                            <ResourceDictionary x:Key="Light">
-                                <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
-                            </ResourceDictionary>
-                        </ResourceDictionary.ThemeDictionaries>
-                    </ResourceDictionary>
-                </Button.Resources>
-                <Grid ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <FontIcon
-                        Margin="0,2,0,0"
-                        VerticalAlignment="Top"
-                        FontSize="14"
-                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                        Glyph="&#xE783;" />
-                    <StackPanel Grid.Column="1" Spacing="2">
-                        <TextBlock Text="Allocation failed" />
-                        <TextBlock
-                            Style="{ThemeResource CaptionTextBlockStyle}"
-                            Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-                            TextWrapping="Wrap" />
+                    <!--  running  -->
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="12"
+                        Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay}">
+                        <ProgressRing
+                            Width="20"
+                            Height="20"
+                            IsActive="{x:Bind ViewModel.IsRunning, Mode=OneWay}" />
+                        <TextBlock VerticalAlignment="Center" Text="Allocating..." />
                     </StackPanel>
+
+                    <!--  success  -->
+                    <!--
+                        (the fill stays in every state and follows a theme switch through the theme dictionaries;
+                        the glyph and the text carry the meaning too)
+                    -->
+                    <Button
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.DismissResultCommand}"
+                        Visibility="{x:Bind ViewModel.IsSucceeded, Mode=OneWay}">
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Default">
+                                        <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorSuccessBackgroundBrush" />
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon
+                                FontSize="14"
+                                Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                Glyph="&#xE73E;" />
+                            <TextBlock Text="Allocation complete" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--  error, with the message under it  -->
+                    <Button
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        AutomationProperties.HelpText="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.DismissResultCommand}"
+                        Visibility="{x:Bind ViewModel.IsFailed, Mode=OneWay}">
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Default">
+                                        <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Light">
+                                        <StaticResource x:Key="ButtonBackground" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="SystemFillColorCriticalBackgroundBrush" />
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon
+                                Margin="0,2,0,0"
+                                VerticalAlignment="Top"
+                                FontSize="14"
+                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                Glyph="&#xE783;" />
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="Allocation failed" />
+                                <TextBlock
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Grid>
+                    </Button>
                 </Grid>
-            </Button>
-        </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
