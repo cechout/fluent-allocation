@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <!--
-    the models, the engines and the allocation view model are linked in rather than referenced: the app is a WinExe on a Windows target
+    the models, the engines and the view models are linked in rather than referenced: the app is a WinExe on a Windows target
     framework and cannot be referenced from a plain net10.0 library, while everything under test here is
     ordinary C# and runs on any dotnet runner
   -->
@@ -17,6 +17,7 @@
     <Compile Include="..\FluentAllocation\Engines\*.cs" />
     <Compile Include="..\FluentAllocation\Services\IFileDialogService.cs" />
     <Compile Include="..\FluentAllocation\ViewModels\AllocationViewModel.cs" />
+    <Compile Include="..\FluentAllocation\ViewModels\HelpViewModel.cs" />
   </ItemGroup>
 
   <!-- the sample workbooks, read by the end to end tests -->
