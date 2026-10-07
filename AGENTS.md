@@ -77,6 +77,10 @@ The WPF version 1 predates these conventions and is left as it was written.
 FluentAllocation/
 ├── Assets/       the app icon
 ├── Distribution/ the channel the running build came from, installer or portable: AppDistribution
+├── Engines/      the allocation, UI-free: SourceWorkbookReader, AllocationEngine, ResultWorkbookWriter, and
+│                 AllocationPipeline, which runs the three in one go
+├── Models/       Participant, Option, SheetValue, AllocationInput, AllocationRequest, AllocationResult,
+│                 AllocationException (a message meant for the user)
 ├── Persistence/  what survives a restart, as json under %LocalAppData%\FluentAllocation, or in a Persistence
 │                 folder next to the exe in the portable build:
 │   ├── Models/   the file shapes, whose initial values are the defaults: AppSettingsData
@@ -95,7 +99,10 @@ Kurszuteilung/
 ├── Icons/        UI icons and the app icon
 └── Images/       the screenshots the help pages show
 
-Samples/          an example source workbook with made-up students
+FluentAllocation.Tests/   the engine tests, plain net10.0, no reference to the app
+
+Samples/          example source workbooks with made-up people: employees and vacation weeks for the WinUI
+                  version, students and courses for the WPF version 1
 Setup/            the Inno Setup script of the WPF version 1 and the script that builds its installer
 ```
 
@@ -159,9 +166,19 @@ silently never run.
 
 ## Test
 
-There is no test project. The bar for a change is that the build stays green and that the screen it
-touches was opened in a running app and looked at. Report what you did not verify instead of implying
-it passed.
+`FluentAllocation.Tests/` covers the reader, the allocation, the writer and whole runs against files on
+disk, plus both workbooks in `Samples/` under many seeds. It targets plain `net10.0` and links the
+sources it tests rather than referencing the app, which is a `WinExe` on a Windows target framework and
+cannot be referenced from a plain library, so the suite runs on any dotnet runner. The lottery takes a
+`Random`, so a test seeds it.
+
+```powershell
+dotnet test FluentAllocation.Tests/FluentAllocation.Tests.csproj
+```
+
+What is not covered is the interface: no test opens a window. The bar for a change is that the tests
+stay green, that the build stays green, and that the screen it touches was opened in a running app and
+looked at. Report what you did not verify instead of implying it passed.
 
 ## Commit & Push
 

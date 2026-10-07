@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>FluentAllocation.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    the models and the engines are linked in rather than referenced: the app is a WinExe on a Windows target
+    framework and cannot be referenced from a plain net10.0 library, while everything under test here is
+    ordinary C# and runs on any dotnet runner
+  -->
+  <ItemGroup>
+    <Compile Include="..\FluentAllocation\Models\*.cs" />
+    <Compile Include="..\FluentAllocation\Engines\*.cs" />
+  </ItemGroup>
+
+  <!-- the sample workbooks, read by the end to end tests -->
+  <ItemGroup>
+    <None Include="..\Samples\*.xlsx" Link="Samples\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
+  </ItemGroup>
+</Project>

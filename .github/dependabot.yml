@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # scoped to the WinUI project; the WPF version 1 is kept as it was and gets no update pull requests
+  # scoped to the WinUI project and its tests; the WPF version 1 is kept as it was and gets no update pull requests
   - package-ecosystem: "nuget"
     directory: "/FluentAllocation"
     schedule:
@@ -11,6 +11,16 @@ updates:
         patterns:
           - "Microsoft.WindowsAppSDK*"
           - "Microsoft.Windows.AI.MachineLearning"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "nuget"
+    directory: "/FluentAllocation.Tests"
+    schedule:
+      interval: "weekly"
+    groups:
       minor-and-patch:
         update-types:
           - "minor"
