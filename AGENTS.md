@@ -86,7 +86,9 @@ FluentAllocation/
 │   ├── Models/   the file shapes, whose initial values are the defaults: AppSettingsData
 │   └── Services/ PersistenceService (the disk), AppDataFolder, and the live SettingsService
 ├── Properties/   PublishProfiles, launchSettings
-├── ViewModels/   SettingsViewModel
+├── Services/     IFileDialogService and the Windows App SDK pickers behind it, so no view model touches a
+│                 picker
+├── ViewModels/   AllocationViewModel (the form and one run at a time, on the thread pool), SettingsViewModel
 └── Views/        AllocationPage, SourceHelpPage, InputHelpPage, SettingsPage
 
 Kurszuteilung/
@@ -167,7 +169,7 @@ silently never run.
 ## Test
 
 `FluentAllocation.Tests/` covers the reader, the allocation, the writer and whole runs against files on
-disk, plus both workbooks in `Samples/` under many seeds. It targets plain `net10.0` and links the
+disk, both workbooks in `Samples/` under many seeds, and `AllocationViewModel` with the pickers faked. It targets plain `net10.0` and links the
 sources it tests rather than referencing the app, which is a `WinExe` on a Windows target framework and
 cannot be referenced from a plain library, so the suite runs on any dotnet runner. The lottery takes a
 `Random`, so a test seeds it.
