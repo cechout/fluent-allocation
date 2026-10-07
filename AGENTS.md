@@ -76,6 +76,7 @@ The WPF version 1 predates these conventions and is left as it was written.
 ```text
 FluentAllocation/
 ├── Assets/       the app icon
+├── Controls/     SheetPreview, a few rows of a worksheet drawn in XAML for the help pages
 ├── Distribution/ the channel the running build came from, installer or portable: AppDistribution
 ├── Engines/      the allocation, UI-free: SourceWorkbookReader, AllocationEngine, ResultWorkbookWriter, and
 │                 AllocationPipeline, which runs the three in one go
@@ -88,8 +89,10 @@ FluentAllocation/
 ├── Properties/   PublishProfiles, launchSettings
 ├── Services/     IFileDialogService and the Windows App SDK pickers behind it, so no view model touches a
 │                 picker
-├── ViewModels/   AllocationViewModel (the form and one run at a time, on the thread pool), SettingsViewModel
-└── Views/        AllocationPage, SourceHelpPage, InputHelpPage, SettingsPage
+├── ViewModels/   AllocationViewModel (the form and one run at a time, on the thread pool), HelpViewModel
+│                 (the step of a help section), SettingsViewModel
+└── Views/        AllocationPage, SourceHelpPage, InputHelpPage, SettingsPage, and HelpSteps, which shows the
+                  current step of a help page
 
 Kurszuteilung/
 ├── Classes/      the allocation pipeline and its helpers: EvaluateC runs it, Functions1 reads the workbook
@@ -169,7 +172,8 @@ silently never run.
 ## Test
 
 `FluentAllocation.Tests/` covers the reader, the allocation, the writer and whole runs against files on
-disk, both workbooks in `Samples/` under many seeds, and `AllocationViewModel` with the pickers faked. It targets plain `net10.0` and links the
+disk, both workbooks in `Samples/` under many seeds, `AllocationViewModel` with the pickers faked, and
+`HelpViewModel`. It targets plain `net10.0` and links the
 sources it tests rather than referencing the app, which is a `WinExe` on a Windows target framework and
 cannot be referenced from a plain library, so the suite runs on any dotnet runner. The lottery takes a
 `Random`, so a test seeds it.
