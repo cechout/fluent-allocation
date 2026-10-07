@@ -21,9 +21,11 @@ namespace FluentAllocation
         // === fields ===
 
         // --- window size ---
-        // in DIP; (the start size is the floor too, as in version 1)
+        // in DIP; (the start size is the one of version 1)
         private const double StartWidth = 400;
         private const double StartHeight = 610;
+        private const double MinWidth = 320;
+        private const double MinHeight = 400;
 
         // --- title bar ---
         private const double TitleBarDeactivatedOpacity = 0.5; // TitleBarDeactivatedOpacity of the WinUI TitleBar
@@ -56,8 +58,8 @@ namespace FluentAllocation
             SettingsService.Instance.ThemeChanged += ApplyTheme;
 
             _windowManager = WindowManager.Get(this);
-            _windowManager.MinWidth = StartWidth;
-            _windowManager.MinHeight = StartHeight;
+            _windowManager.MinWidth = MinWidth;
+            _windowManager.MinHeight = MinHeight;
             this.SetWindowSize(StartWidth, StartHeight);
         }
 

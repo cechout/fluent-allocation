@@ -28,7 +28,7 @@
         <!--
             the file buttons and Allocate sit in star rows as in version 1 and grow with the window; the grid
             is held at least as tall as the viewport (FormScroller_SizeChanged) and scrolls once it needs more
-            (every label sits 8 above its control, every section 12 below the one before)
+            (the gaps sit in the fixed rows, so the three star rows hold nothing but their button and stay equal)
         -->
         <ScrollViewer
             x:Name="FormScroller"
@@ -51,6 +51,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -58,7 +61,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
-                    Margin="0,0,0,8"
+                    Margin="4,8,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Source Workbook" />
                 <Button
@@ -66,23 +69,34 @@
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
                     AutomationProperties.Name="Source workbook"
                     Command="{x:Bind ViewModel.PickSourceCommand}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.SourcePath, Mode=OneWay}">
-                    <TextBlock Text="{x:Bind ViewModel.SourceLabel, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontSize="16" Glyph="&#xE74E;" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{x:Bind ViewModel.SourceLabel, Mode=OneWay}"
+                            TextTrimming="CharacterEllipsis" />
+                    </Grid>
                 </Button>
 
                 <!--  result workbook: new or existing, then the file of that mode  -->
                 <TextBlock
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Margin="0,12,0,8"
+                    Margin="4,12,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Result Workbook" />
                 <controls:Segmented
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
+                    Margin="0,0,0,8"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.Name="Result workbook"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
@@ -93,58 +107,92 @@
                 <Button
                     Grid.Row="4"
                     Grid.ColumnSpan="2"
-                    Margin="0,8,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
                     AutomationProperties.Name="Result file"
                     Command="{x:Bind ViewModel.PickResultCommand}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.ResultPath, Mode=OneWay}">
-                    <TextBlock Text="{x:Bind ViewModel.ResultLabel, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontSize="16" Glyph="&#xE74E;" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{x:Bind ViewModel.ResultLabel, Mode=OneWay}"
+                            TextTrimming="CharacterEllipsis" />
+                    </Grid>
                 </Button>
 
-                <!--  counts, two per row as in version 1  -->
-                <NumberBox
+                <!--  counts, two per row as in version 1, each with its label above it  -->
+                <TextBlock
                     Grid.Row="5"
                     Grid.Column="0"
-                    Margin="0,12,4,0"
-                    Header="Participants"
+                    Margin="0,12,4,8"
+                    Text="Participants" />
+                <NumberBox
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    AutomationProperties.Name="Participants"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
                     SpinButtonPlacementMode="Inline"
                     Value="{x:Bind ViewModel.ParticipantCount, Mode=TwoWay}" />
-                <NumberBox
+                <TextBlock
                     Grid.Row="5"
                     Grid.Column="1"
-                    Margin="4,12,0,0"
-                    Header="Options"
+                    Margin="4,12,0,8"
+                    Text="Options" />
+                <NumberBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="4,0,0,0"
+                    AutomationProperties.Name="Options"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
                     SpinButtonPlacementMode="Inline"
                     Value="{x:Bind ViewModel.OptionCount, Mode=TwoWay}" />
-                <NumberBox
-                    Grid.Row="6"
+                <TextBlock
+                    Grid.Row="7"
                     Grid.Column="0"
-                    Margin="0,12,4,0"
-                    Header="Attributes"
+                    Margin="0,8,4,8"
+                    Text="Attributes" />
+                <NumberBox
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    AutomationProperties.Name="Attributes"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
                     SpinButtonPlacementMode="Inline"
                     Value="{x:Bind ViewModel.AttributeCount, Mode=TwoWay}" />
-                <NumberBox
-                    Grid.Row="6"
+                <TextBlock
+                    Grid.Row="7"
                     Grid.Column="1"
-                    Margin="4,12,0,0"
-                    Header="Priorities"
+                    Margin="4,8,0,8"
+                    Text="Priorities" />
+                <NumberBox
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    Margin="4,0,0,0"
+                    AutomationProperties.Name="Priorities"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
                     SpinButtonPlacementMode="Inline"
                     Value="{x:Bind ViewModel.PriorityCount, Mode=TwoWay}" />
-                <NumberBox
-                    Grid.Row="7"
+                <TextBlock
+                    Grid.Row="9"
                     Grid.Column="0"
-                    Margin="0,12,4,0"
-                    Header="Options per Participant"
+                    Margin="0,8,4,8"
+                    Text="Options per Participant" />
+                <NumberBox
+                    Grid.Row="10"
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    AutomationProperties.Name="Options per Participant"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
                     SpinButtonPlacementMode="Inline"
@@ -152,15 +200,15 @@
 
                 <!--  grouping: the switch, then the attribute to group by  -->
                 <TextBlock
-                    Grid.Row="8"
+                    Grid.Row="11"
                     Grid.ColumnSpan="2"
-                    Margin="0,12,0,8"
+                    Margin="4,12,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Group by Attribute" />
                 <Grid
-                    Grid.Row="9"
+                    Grid.Row="12"
                     Grid.ColumnSpan="2"
-                    ColumnSpacing="8">
+                    ColumnSpacing="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -181,17 +229,14 @@
 
                 <!--  separator  -->
                 <Rectangle
-                    Grid.Row="10"
+                    Grid.Row="13"
                     Grid.ColumnSpan="2"
                     Height="1"
-                    Margin="0,12,0,0"
+                    Margin="0,12,0,12"
                     Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
                 <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
-                <Grid
-                    Grid.Row="11"
-                    Grid.ColumnSpan="2"
-                    Margin="0,12,0,0">
+                <Grid Grid.Row="14" Grid.ColumnSpan="2">
 
                     <!--  allocate  -->
                     <Button
