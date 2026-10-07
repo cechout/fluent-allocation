@@ -1,4 +1,5 @@
 using FluentAllocation.Persistence.Services;
+using FluentAllocation.Services;
 using Microsoft.UI.Xaml;
 
 namespace FluentAllocation
@@ -7,6 +8,9 @@ namespace FluentAllocation
     public partial class App : Application
     {
         private Window? _window;
+
+        // set by MainWindow, which the pickers belong to
+        public static IFileDialogService FileDialogs { get; set; } = null!;
 
         public App()
         {

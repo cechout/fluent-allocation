@@ -31,12 +31,12 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel
                 MaxWidth="1000"
-                Margin="16,12,16,20"
+                Margin="4"
                 Spacing="4">
 
                 <!--  general  -->
                 <TextBlock
-                    Margin="4,8,0,6"
+                    Margin="4,0,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="General" />
 
@@ -55,7 +55,7 @@
 
                 <!--  about and open source  -->
                 <TextBlock
-                    Margin="4,20,0,6"
+                    Margin="4,12,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="About &amp; Open Source" />
 

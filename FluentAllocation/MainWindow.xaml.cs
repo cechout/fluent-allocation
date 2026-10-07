@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FluentAllocation.Persistence.Models;
 using FluentAllocation.Persistence.Services;
+using FluentAllocation.Services;
 using FluentAllocation.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -20,9 +21,11 @@ namespace FluentAllocation
         // === fields ===
 
         // --- window size ---
-        // in DIP; (the start size is the floor too, as in version 1)
-        private const double StartWidth = 400;
-        private const double StartHeight = 610;
+        // in DIP; (the start size is the one of version 1)
+        private const double StartWidth = 340;
+        private const double StartHeight = 620;
+        private const double MinWidth = 340;
+        private const double MinHeight = 620;
 
         // --- title bar ---
         private const double TitleBarDeactivatedOpacity = 0.5; // TitleBarDeactivatedOpacity of the WinUI TitleBar
@@ -36,6 +39,9 @@ namespace FluentAllocation
         {
             this.InitializeComponent();
             this.AppWindow.SetIcon("Assets\\Icon\\Icon.ico");
+
+            // the pickers need the window, and the first page asks for them while it is built
+            App.FileDialogs = new FileDialogService(AppWindow.Id);
 
             ShowPage(typeof(AllocationPage));
             NavView.SelectedItem = NavView.MenuItems.OfType<NavigationViewItem>().First(item => (string)item.Tag == "Allocation");
@@ -52,8 +58,8 @@ namespace FluentAllocation
             SettingsService.Instance.ThemeChanged += ApplyTheme;
 
             _windowManager = WindowManager.Get(this);
-            _windowManager.MinWidth = StartWidth;
-            _windowManager.MinHeight = StartHeight;
+            _windowManager.MinWidth = MinWidth;
+            _windowManager.MinHeight = MinHeight;
             this.SetWindowSize(StartWidth, StartHeight);
         }
 

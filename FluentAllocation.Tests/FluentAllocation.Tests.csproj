@@ -8,13 +8,15 @@
   </PropertyGroup>
 
   <!--
-    the models and the engines are linked in rather than referenced: the app is a WinExe on a Windows target
+    the models, the engines and the allocation view model are linked in rather than referenced: the app is a WinExe on a Windows target
     framework and cannot be referenced from a plain net10.0 library, while everything under test here is
     ordinary C# and runs on any dotnet runner
   -->
   <ItemGroup>
     <Compile Include="..\FluentAllocation\Models\*.cs" />
     <Compile Include="..\FluentAllocation\Engines\*.cs" />
+    <Compile Include="..\FluentAllocation\Services\IFileDialogService.cs" />
+    <Compile Include="..\FluentAllocation\ViewModels\AllocationViewModel.cs" />
   </ItemGroup>
 
   <!-- the sample workbooks, read by the end to end tests -->
@@ -24,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
