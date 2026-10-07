@@ -26,14 +26,15 @@
 
         <!--  form  -->
         <!--
-            star rows as in version 1, so the controls grow with the window; the grid is held at least as
-            tall as the viewport (FormScroller_SizeChanged) and scrolls once its content needs more
+            the file buttons and Allocate sit in star rows as in version 1 and grow with the window; the grid
+            is held at least as tall as the viewport (FormScroller_SizeChanged) and scrolls once it needs more
+            (every label sits 8 above its control, every section 12 below the one before)
         -->
         <ScrollViewer
             x:Name="FormScroller"
             Grid.Row="1"
             SizeChanged="FormScroller_SizeChanged">
-            <Grid x:Name="FormGrid" Padding="16,4,16,16">
+            <Grid x:Name="FormGrid" Padding="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -42,13 +43,14 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -56,7 +58,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
-                    Margin="0,8,0,4"
+                    Margin="0,0,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Source Workbook" />
                 <Button
@@ -75,14 +77,13 @@
                 <TextBlock
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Margin="0,8,0,4"
+                    Margin="0,12,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Result Workbook" />
                 <controls:Segmented
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
                     AutomationProperties.Name="Result workbook"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     SelectedIndex="{x:Bind ViewModel.ResultTargetIndex, Mode=TwoWay}">
@@ -107,7 +108,6 @@
                     Grid.Row="5"
                     Grid.Column="0"
                     Margin="0,12,4,0"
-                    VerticalAlignment="Stretch"
                     Header="Participants"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -117,7 +117,6 @@
                     Grid.Row="5"
                     Grid.Column="1"
                     Margin="4,12,0,0"
-                    VerticalAlignment="Stretch"
                     Header="Options"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -126,8 +125,7 @@
                 <NumberBox
                     Grid.Row="6"
                     Grid.Column="0"
-                    Margin="0,8,4,0"
-                    VerticalAlignment="Stretch"
+                    Margin="0,12,4,0"
                     Header="Attributes"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -136,8 +134,7 @@
                 <NumberBox
                     Grid.Row="6"
                     Grid.Column="1"
-                    Margin="4,8,0,0"
-                    VerticalAlignment="Stretch"
+                    Margin="4,12,0,0"
                     Header="Priorities"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -146,8 +143,7 @@
                 <NumberBox
                     Grid.Row="7"
                     Grid.Column="0"
-                    Margin="0,8,4,0"
-                    VerticalAlignment="Stretch"
+                    Margin="0,12,4,0"
                     Header="Options per Participant"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -158,7 +154,7 @@
                 <TextBlock
                     Grid.Row="8"
                     Grid.ColumnSpan="2"
-                    Margin="0,8,0,4"
+                    Margin="0,12,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Group by Attribute" />
                 <Grid
@@ -177,19 +173,25 @@
                         IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}" />
                     <TextBox
                         Grid.Column="1"
-                        VerticalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
                         AutomationProperties.Name="Attribute name"
                         IsEnabled="{x:Bind ViewModel.IsGroupAttributeEnabled, Mode=OneWay}"
                         PlaceholderText="Attribute name"
                         Text="{x:Bind ViewModel.GroupAttribute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
-                <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
-                <Grid
+                <!--  separator  -->
+                <Rectangle
                     Grid.Row="10"
                     Grid.ColumnSpan="2"
-                    Margin="0,16,0,0">
+                    Height="1"
+                    Margin="0,12,0,0"
+                    Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
+                <Grid
+                    Grid.Row="11"
+                    Grid.ColumnSpan="2"
+                    Margin="0,12,0,0">
 
                     <!--  allocate  -->
                     <Button
