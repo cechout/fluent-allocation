@@ -3,12 +3,15 @@
     x:Class="FluentAllocation.Views.SourceHelpPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FluentAllocation.Controls"
+    xmlns:local="using:FluentAllocation.Views"
     NavigationCacheMode="Required">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  page header  -->
@@ -21,6 +24,292 @@
                 VerticalAlignment="Center"
                 Style="{ThemeResource SubtitleTextBlockStyle}"
                 Text="Source Workbook" />
+        </Grid>
+
+        <!--  steps  -->
+        <!--
+            one at a time, each the picture of a sheet over its explanation, as in version 1; the picture
+            shrinks to the width it gets, the text scrolls
+        -->
+        <Grid Grid.Row="1" Padding="8">
+
+            <!--  step 1: the two sheets  -->
+            <Grid Visibility="{x:Bind local:HelpSteps.Show(ViewModel.CurrentStep, 0), Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  sheet tabs  -->
+                <Border
+                    Padding="8"
+                    HorizontalAlignment="Left"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <FontIcon
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Glyph="&#xE76B;" />
+                        <FontIcon
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Glyph="&#xE76C;" />
+                        <TextBlock VerticalAlignment="Center" Text="Participants" />
+                        <Border BorderBrush="{ThemeResource AccentFillColorDefaultBrush}" BorderThickness="0,0,0,2">
+                            <TextBlock FontWeight="SemiBold" Text="Options" />
+                        </Border>
+                        <FontIcon
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Glyph="&#xE710;" />
+                    </StackPanel>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" Margin="0,16,0,0">
+                    <StackPanel Margin="4,0" Spacing="8">
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="The workbook needs two sheets." />
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="Sheet 1 holds the" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="participants" /><Run Text="." />
+                            <LineBreak />
+                            <Run Text="Sheet 2 holds the" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="options" /><Run Text="." />
+                        </TextBlock>
+                        <TextBlock
+                            Margin="0,12,0,0"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            TextWrapping="Wrap">
+                            <Run Text="Note:" />
+                            <LineBreak />
+                            <Run Text="The names of the sheets do not matter, only their order." />
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  step 2: the columns of the participants sheet  -->
+            <Grid Visibility="{x:Bind local:HelpSteps.Show(ViewModel.CurrentStep, 1), Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly">
+                    <controls:SheetPreview Headers="Id, Name, Attribute 1?, Attribute 2?, Priority 1, Priority 2" />
+                </Viewbox>
+
+                <ScrollViewer Grid.Row="1" Margin="0,16,0,0">
+                    <StackPanel Margin="4,0" Spacing="8">
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Sheet 1: Participants" />
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="These columns have to come" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="one after another" /><Run Text="." />
+                        </TextBlock>
+                        <TextBlock LineHeight="24" TextWrapping="Wrap">
+                            <Run Text="Column A:" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Id" />
+                            <LineBreak />
+                            <Run Text="Column B:" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Name" />
+                            <LineBreak />
+                            <Run Text="From column C: any number of" />
+                            <Run Foreground="{ThemeResource SystemFillColorSuccessBrush}" Text="attributes" />
+                            <LineBreak />
+                            <Run Text="After them: any number of" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="priorities" />
+                        </TextBlock>
+
+                        <!--  legend  -->
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Border
+                                Width="16"
+                                Height="16"
+                                Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                BorderBrush="{ThemeResource SystemFillColorCriticalBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4" />
+                            <TextBlock Margin="0,0,16,0" Text="Required" />
+                            <Border
+                                Width="16"
+                                Height="16"
+                                Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                BorderBrush="{ThemeResource SystemFillColorSuccessBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4" />
+                            <TextBlock Text="Optional" />
+                        </StackPanel>
+
+                        <TextBlock
+                            Margin="0,12,0,0"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            TextWrapping="Wrap">
+                            <Run Text="Note:" />
+                            <LineBreak />
+                            <Run Text="The labels in the header row do not matter, except for the attributes: their labels are the attribute names." />
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  step 3: the columns of the options sheet  -->
+            <Grid Visibility="{x:Bind local:HelpSteps.Show(ViewModel.CurrentStep, 2), Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly">
+                    <controls:SheetPreview Headers="Id, Name, Capacity" />
+                </Viewbox>
+
+                <ScrollViewer Grid.Row="1" Margin="0,16,0,0">
+                    <StackPanel Margin="4,0" Spacing="8">
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Sheet 2: Options" />
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="These columns have to come" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="one after another" /><Run Text="." />
+                        </TextBlock>
+                        <TextBlock LineHeight="24" TextWrapping="Wrap">
+                            <Run Text="Column A:" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Id" />
+                            <LineBreak />
+                            <Run Text="Column B:" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Name" />
+                            <LineBreak />
+                            <Run Text="Column C:" />
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Capacity" />
+                        </TextBlock>
+
+                        <!--  legend  -->
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Border
+                                Width="16"
+                                Height="16"
+                                Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                BorderBrush="{ThemeResource SystemFillColorCriticalBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4" />
+                            <TextBlock Text="Required" />
+                        </StackPanel>
+
+                        <TextBlock
+                            Margin="0,12,0,0"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            TextWrapping="Wrap">
+                            <Run Text="Note:" />
+                            <LineBreak />
+                            <Run Text="The labels in the header row do not matter." />
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  step 4: an example participants sheet  -->
+            <Grid Visibility="{x:Bind local:HelpSteps.Show(ViewModel.CurrentStep, 3), Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly">
+                    <controls:SheetPreview Headers="Id, Name, Department?, Priority 1, Priority 2" Rows="1|Alex Baker|Sales|3|1; 2|Sam Carter|Support|2|3; 3|Jordan Ellis|Finance|2|5; 4|Taylor Grant|Sales|1|2; 6|Morgan Reed|Support|5|3" />
+                </Viewbox>
+
+                <ScrollViewer Grid.Row="1" Margin="0,16,0,0">
+                    <StackPanel Margin="4,0" Spacing="8">
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Sheet 1: Explanation and Example" />
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Id:" />
+                            <Run Text="A" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="unique" />
+                            <Run Text="whole number. Numbers may be skipped." />
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Name:" />
+                            <Run Text="The name of the participant. It has no effect on the allocation." />
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorSuccessBrush}" Text="Attributes:" />
+                            <Run Text="Anything that describes a participant, for example the department or the age." />
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Priorities:" />
+                            <Run Text="The options a participant wants, as the" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="option Id" /><Run Text=", the most wanted first: priority 1, priority 2 and so on. An empty cell, an Id that is no option, or an option chosen twice is skipped, and the later priorities move up." />
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  step 5: an example options sheet  -->
+            <Grid Visibility="{x:Bind local:HelpSteps.Show(ViewModel.CurrentStep, 4), Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly">
+                    <controls:SheetPreview Headers="Id, Name, Capacity" Rows="1|Week 27|8; 2|Week 28|9; 3|Week 29|10; 5|Week 31|10; 6|Week 32|9" />
+                </Viewbox>
+
+                <ScrollViewer Grid.Row="1" Margin="0,16,0,0">
+                    <StackPanel Margin="4,0" Spacing="8">
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Sheet 2: Explanation and Example" />
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Id:" />
+                            <Run Text="A" />
+                            <Run FontWeight="SemiBold" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Text="unique" />
+                            <Run Text="whole number. Numbers may be skipped." />
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Name:" />
+                            <Run Text="The name of the option. It has no effect on the allocation and is what the result shows." />
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="Capacity:" />
+                            <Run Text="How many participants the option can take." />
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!--  back, the steps, next  -->
+        <Grid
+            Grid.Row="2"
+            Padding="8"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                AutomationProperties.Name="Back"
+                Command="{x:Bind ViewModel.BackCommand}"
+                ToolTipService.ToolTip="Back">
+                <FontIcon FontSize="16" Glyph="&#xE76B;" />
+            </Button>
+            <PipsPager
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                AutomationProperties.Name="Step"
+                NumberOfPages="{x:Bind ViewModel.StepCount}"
+                SelectedPageIndex="{x:Bind ViewModel.CurrentStep, Mode=TwoWay}" />
+            <Button
+                Grid.Column="2"
+                AutomationProperties.Name="Next"
+                Command="{x:Bind ViewModel.NextCommand}"
+                ToolTipService.ToolTip="Next">
+                <FontIcon FontSize="16" Glyph="&#xE76C;" />
+            </Button>
         </Grid>
     </Grid>
 </Page>
