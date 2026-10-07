@@ -22,10 +22,10 @@ namespace FluentAllocation
 
         // --- window size ---
         // in DIP; (the start size is the one of version 1)
-        private const double StartWidth = 400;
-        private const double StartHeight = 610;
-        private const double MinWidth = 320;
-        private const double MinHeight = 400;
+        private const double StartWidth = 340;
+        private const double StartHeight = 620;
+        private const double MinWidth = 340;
+        private const double MinHeight = 620;
 
         // --- title bar ---
         private const double TitleBarDeactivatedOpacity = 0.5; // TitleBarDeactivatedOpacity of the WinUI TitleBar

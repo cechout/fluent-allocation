@@ -34,7 +34,10 @@
             x:Name="FormScroller"
             Grid.Row="1"
             SizeChanged="FormScroller_SizeChanged">
-            <Grid x:Name="FormGrid" Padding="4">
+            <Grid
+                x:Name="FormGrid"
+                Padding="8"
+                ColumnSpacing="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -61,7 +64,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
-                    Margin="4,8,0,8"
+                    Margin="4,4,0,6"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Source Workbook" />
                 <Button
@@ -90,13 +93,13 @@
                 <TextBlock
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Margin="4,12,0,8"
+                    Margin="4,16,0,6"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Result Workbook" />
                 <controls:Segmented
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
-                    Margin="0,0,0,8"
+                    Margin="0,0,0,5"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.Name="Result workbook"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
@@ -130,7 +133,7 @@
                 <TextBlock
                     Grid.Row="5"
                     Grid.Column="0"
-                    Margin="0,12,4,8"
+                    Margin="4,16,4,6"
                     Text="Participants" />
                 <NumberBox
                     Grid.Row="6"
@@ -144,12 +147,12 @@
                 <TextBlock
                     Grid.Row="5"
                     Grid.Column="1"
-                    Margin="4,12,0,8"
+                    Margin="4,16,0,6"
                     Text="Options" />
                 <NumberBox
                     Grid.Row="6"
                     Grid.Column="1"
-                    Margin="4,0,0,0"
+                    Margin="0,0,0,0"
                     AutomationProperties.Name="Options"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -158,7 +161,7 @@
                 <TextBlock
                     Grid.Row="7"
                     Grid.Column="0"
-                    Margin="0,8,4,8"
+                    Margin="4,8,4,6"
                     Text="Attributes" />
                 <NumberBox
                     Grid.Row="8"
@@ -172,12 +175,12 @@
                 <TextBlock
                     Grid.Row="7"
                     Grid.Column="1"
-                    Margin="4,8,0,8"
+                    Margin="4,8,0,6"
                     Text="Priorities" />
                 <NumberBox
                     Grid.Row="8"
                     Grid.Column="1"
-                    Margin="4,0,0,0"
+                    Margin="0,0,0,0"
                     AutomationProperties.Name="Priorities"
                     IsEnabled="{x:Bind ViewModel.IsFormEnabled, Mode=OneWay}"
                     Minimum="0"
@@ -186,7 +189,7 @@
                 <TextBlock
                     Grid.Row="9"
                     Grid.Column="0"
-                    Margin="0,8,4,8"
+                    Margin="4,8,4,6"
                     Text="Options per Participant" />
                 <NumberBox
                     Grid.Row="10"
@@ -202,7 +205,7 @@
                 <TextBlock
                     Grid.Row="11"
                     Grid.ColumnSpan="2"
-                    Margin="4,12,0,8"
+                    Margin="4,16,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="Group by Attribute" />
                 <Grid
@@ -232,7 +235,7 @@
                     Grid.Row="13"
                     Grid.ColumnSpan="2"
                     Height="1"
-                    Margin="0,12,0,12"
+                    Margin="-8,16,-8,0"
                     Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
                 <!--  run: allocate, the progress while it runs, then success or error; one at a time  -->
@@ -240,6 +243,7 @@
 
                     <!--  allocate  -->
                     <Button
+                        Margin="0,8,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Command="{x:Bind ViewModel.AllocateCommand}"
